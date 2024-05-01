@@ -1,5 +1,5 @@
 # kubernetes-go-project
-Simple Kubernetes Go project
+Simple Kubernetes Go project with minikube
 
 1. Create a new directory for your project:
 ```
@@ -11,7 +11,6 @@ cd kubernetes-go-project
 ```
 go mod init github.com/<username>/kubernetes-go-project
 ```
-Replace <username> with your GitHub username.
 
 3. Create a new Go file with some code. For example, create a file called main.go with the following content:
 ```
@@ -46,6 +45,8 @@ CMD ["/app/app"]
 
 5. Create a Kubernetes deployment YAML file with the following content. 
 This YAML file will create a deployment with one replica and a service for the deployment.
+
+*Replace your-docker-username with your Docker Hub username.
 ```
 apiVersion: apps/v1
 kind: Deployment
@@ -79,15 +80,28 @@ spec:
       port: 80
       targetPort: 8080
 ```
-Replace <your-docker-username> with your Docker Hub username.
 
-6. Build the Docker image and push it to Docker Hub:
+6. Build the Docker image:
 ```
 docker build -t <your-docker-username>/kubernetes-go-project:latest .
+```
+
+7. and push it to Docker Hub:
+```
 docker push <your-docker-username>/kubernetes-go-project:latest
 ```
 
-7. Deploy the application to Kubernetes by applying the YAML file (start minikube):
+8. Start minikube and deploy the application to Kubernetes by applying the YAML file:
 ```
 kubectl apply -f deployment.yaml
+```
+
+9. Check the status of your service:
+```
+kubectl get services
+```
+
+10. run the following command to access the application:
+```
+minikube service kubernetes-go-project
 ```
